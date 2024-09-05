@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wastewater Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Screen 1 -->
+  <div id="screen1" class="screen">
+    <div class="cart">
+      <p>Wastewater Calculator</p>
+      <button id="btn">Let's Get Started</button>
+    </div>
+  </div>
+
+  <!-- Screen 2 -->
+  <div id="screen2" class="screen">
+    <div class="box" id="bodOption">
+      <h2>BOD Calculation</h2>
+    </div>
+    <div class="box" id="codOption">
+      <h2>COD Calculation</h2>
+    </div>
+    <div class="box" id="organicsOption">
+      <h2>Organics Calculation (TSS, TDS, TS, TVS, TFS)</h2>
+    </div>
+    <div class="box" id="temperatureOption">
+      <h2>Temperature Adjustment for BOD</h2>
+    </div>
+    <div class="box" id="monodOption">
+      <h2>Microbial Growth & Biomass (Monod)</h2>
+    </div>
+    <div class="box" id="sludgeAgeOption">
+      <h2>Sludge Age Calculation</h2>
+    </div>
+  </div>
+
+  <!-- BOD Calculation Screen -->
+  <div id="bodCalcScreen" class="screen">
+    <div class="bod-calculator">
+      <h1>BOD Calculator</h1>
+      <label for="numSamples">Number of Samples:</label>
+      <input type="number" id="numSamples" min="1" required>
+      <button id="generateBODFields">Generate BOD Fields</button>
+
+      <form id="bodForm" style="display: none;">
+        <div id="bodSampleFields"></div>
+        <label for="bodVolume">Sample Volume (mL):</label>
+        <input type="number" id="bodVolume" required>
+        <label for="bodDilution">Dilution Factor (Bottle Volume in mL):</label>
+        <input type="number" id="bodDilution" required>
+        <button type="submit">Calculate Average BOD</button>
+      </form>
+      <div id="bodResult"></div>
+      <button id="bodReturnBtn" style="display: none;">Return to Main Menu</button>
+    </div>
+  </div>
+
+  <!-- COD Calculation Screen -->
+  <div id="codCalcScreen" class="screen">
+    <div class="cod-calculator">
+      <h1>COD Calculator</h1>
+      <label for="numCODSamples">Number of Samples:</label>
+      <input type="number" id="numCODSamples" min="1" required>
+      <button id="generateCODFields">Generate COD Fields</button>
+
+      <form id="codForm" style="display: none;">
+        <div id="codSampleFields"></div>
+        <label for="codVolume">Sample Volume (mL):</label>
+        <input type="number" id="codVolume" required>
+        <label for="codDilution">Dilution Factor (Bottle Volume in mL):</label>
+        <input type="number" id="codDilution" required>
+        <button type="submit">Calculate Average COD</button>
+      </form>
+      <div id="codResult"></div>
+      <button id="codReturnBtn" style="display: none;">Return to Main Menu</button>
+    </div>
+  </div>
+
+  <!-- Organics Calculation Screen -->
+  <div id="organicsCalcScreen" class="screen">
+    <div class="organics-calculator">
+      <h1>Organics Calculator</h1>
+      <label for="tss">TSS (mg/L):</label>
+      <input type="number" id="tss" required>
+      <label for="tds">TDS (mg/L):</label>
+      <input type="number" id="tds" required>
+      <label for="ts">Total Solids (mg/L):</label>
+      <input type="number" id="ts" required>
+      <label for="tfs">TFS (mg/L):</label>
+      <input type="number" id="tfs" required>
+      <label for="tvs">TVS (mg/L):</label>
+      <input type="number" id="tvs" required>
+      <button id="calcOrganics">Calculate Organics</button>
+      <div id="organicsResult"></div>
+    </div>
+  </div>
+
+  <!-- Temperature Adjustment Screen -->
+  <div id="temperatureCalcScreen" class="screen">
+    <div class="temperature-calculator">
+      <h1>BOD Temperature Adjustment</h1>
+      <label for="k20">BOD Rate Constant at 20°C (K<sub>20</sub>):</label>
+      <input type="number" id="k20" step="0.01" required>
+      <label for="theta">Temperature Coefficient (θ):</label>
+      <input type="number" id="theta" value="1.047" step="0.001" required>
+      <label for="temp">Actual Temperature (°C):</label>
+      <input type="number" id="temp" required>
+      <button id="calcTempAdjustment">Calculate Adjusted Rate Constant</button>
+      <div id="tempResult"></div>
+    </div>
+  </div>
+
+  <!-- Monod Equation Screen -->
+  <div id="monodCalcScreen" class="screen">
+    <div class="monod-calculator">
+      <h1>Monod Growth Calculator</h1>
+      <label for="s">Substrate Concentration (S, mg/L):</label>
+      <input type="number" id="s" required>
+      <label for="ks">Half-Saturation Constant (K<sub>s</sub>, mg/L):</label>
+      <input type="number" id="ks" required>
+      <label for="mumax">Maximum Growth Rate (μ<sub>max</sub>, 1/day):</label>
+      <input type="number" id="mumax" required>
+      <label for="flowRate">Flow Rate (Q, m<sup>3</sup>/day):</label>
+      <input type="number" id="flowRate" required>
+      <label for="volume">Reactor Volume (V, m<sup>3</sup>):</label>
+      <input type="number" id="volume" required>
+      <button id="calcMonod">Calculate Growth & HRT</button>
+      <div id="monodResult"></div>
+    </div>
+  </div>
+
+  <!-- Sludge Age Calculation Screen -->
+  <div id="sludgeAgeCalcScreen" class="screen">
+    <div class="sludge-age-calculator">
+      <h1>Sludge Age Calculator</h1>
+      <label for="sludgeVolume">Sludge Volume (m<sup>3</sup>):</label>
+      <input type="number" id="sludgeVolume" required>
+      <label for="flowRate">Flow Rate (m<sup>3</sup>/day):</label>
+      <input type="number" id="flowRate" required>
+      <label for="sludgeProduction">Sludge Production (kg/day):</label>
+      <input type="number" id="sludgeProduction" required>
+      <button id="calcSludgeAge">Calculate Sludge Age</button>
+      <div id="sludgeAgeResult"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
